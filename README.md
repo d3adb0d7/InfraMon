@@ -5,20 +5,7 @@
 ![React](https://img.shields.io/badge/React-18+-61dafb)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-336791)
 
-A comprehensive website and service monitoring system that provides real-time monitoring, alerting, and reporting for your infrastructure.
-
-## 🎯 Features
-
-- **🔍 Multi-method Monitoring**: HTTP, PING, CURL, and custom CURL commands
-- **🚨 Real-time Alerts**: Email and Telegram notifications with beautiful templates
-- **📊 Beautiful Dashboard**: Real-time status updates and comprehensive statistics
-- **👥 User Management**: Role-based access control (admin, user, monitoring_user)
-- **📈 Comprehensive Reporting**: Uptime statistics, response time analysis, alert history
-- **⚡ Real-time Updates**: Server-Sent Events (SSE) for live status without page refresh
-- **🔧 Custom CURL Support**: Advanced monitoring with full command control
-- **⏰ Alert Cooldown**: Configurable alert frequency to prevent notification spam
-- **🌙 Quiet Hours**: Schedule quiet periods for non-critical alerts
-- **📱 Responsive Design**: Mobile-friendly interface built with Tailwind CSS
+InfraMon is a comprehensive website and service monitoring system that provides real-time monitoring, alerting, and reporting for your infrastructure. It supports multiple monitoring methods including HTTP requests, PING, CURL commands, and custom CURL scripts.
 
 ## 🏗️ Project Structure
 
@@ -54,160 +41,215 @@ InfraMon/
 └── README.md
 ```
 
+## 🎯 Features
+
+- **🔍 Multi-method Monitoring**: HTTP, PING, CURL, and custom CURL commands
+- **🚨 Real-time Alerts**: Email and Telegram notifications with beautiful templates
+- **📊 Beautiful Dashboard**: Real-time status updates and comprehensive statistics
+- **👥 User Management**: Role-based access control (admin, user, monitoring_user)
+- **📈 Comprehensive Reporting**: Uptime statistics, response time analysis, alert history
+- **⚡ Real-time Updates**: Server-Sent Events (SSE) for live status without page refresh
+- **🔧 Custom CURL Support**: Advanced monitoring with full command control
+- **⏰ Alert Cooldown**: Configurable alert frequency to prevent notification spam
+- **🌙 Quiet Hours**: Schedule quiet periods for non-critical alerts
+- **📱 Responsive Design**: Mobile-friendly interface built with Tailwind CSS
+
+
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- **Node.js** 18 or higher
-- **PostgreSQL** 14 or higher
-- **npm** or **yarn** package manager
+- Node.js 16+ 
+- PostgreSQL 12+
+- npm or yarn
 
-### Development Deployment
+## 🛠️ Development Deployment
 
-#### 1. Backend Setup
+### Backend Setup
 
-```bash
-# Navigate to backend directory
-cd backend
+1. **Navigate to backend directory:**
+   ```bash
+   cd backend
+   ```
 
-# Install dependencies
-npm install
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-# Set up environment variables
-cp .env.example .env
-```
+3. **Set up environment variables:**
+   ```bash
+   cp .env.example .env
+   ```
+   Edit `.env` file:
+   ```env
+   # Database
+   DB_NAME=InfraMon
+   DB_USER=postgres
+   DB_PASSWORD=postgres
+   DB_HOST=127.0.0.1
+   DB_PORT=5432
 
-Edit the `.env` file:
+   # JWT Secret
+   JWT_SECRET=your-development-secret-key
 
-```env
-# Database Configuration
-DB_NAME=InfraMon
-DB_USER=postgres
-DB_PASSWORD=postgres
-DB_HOST=127.0.0.1
-DB_PORT=5432
+   # Email (Optional for development)
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_SECURE=false
+   SMTP_USER=your-email@gmail.com
+   SMTP_PASS=your-app-password
+   SMTP_FROM=InfraMon <noreply@inframon.app>
 
-# JWT Configuration
-JWT_SECRET=your-development-secret-key-change-in-production
+   # Telegram (Optional for development)
+   TELEGRAM_BOT_TOKEN=your-bot-token
 
-# Email Configuration (Optional)
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=your-email@gmail.com
-SMTP_PASS=your-app-password
-SMTP_FROM=InfraMon <noreply@inframon.app>
+   # Server
+   PORT=5002
+   NODE_ENV=development
+   ```
 
-# Telegram Configuration (Optional)
-TELEGRAM_BOT_TOKEN=your-bot-token
+4. **Set up database:**
+   ```bash
+   # Create database
+   npx sequelize-cli db:create
 
-# Server Configuration
-PORT=5002
-NODE_ENV=development
-```
+   # Run migrations
+   npx sequelize-cli db:migrate
 
-Set up the database:
+   # (Optional) Seed with sample data
+   npx sequelize-cli db:seed:all
+   ```
 
-```bash
-# Create database
-npx sequelize-cli db:create
+5. **Start the backend server:**
+   ```bash
+   # Development mode with auto-reload
+   npm run dev
 
-# Run migrations
-npx sequelize-cli db:migrate
+   # Or production mode
+   npm start
+   ```
 
-# Start development server
-npm run dev
-```
+   The backend will be available at `http://localhost:5002`
 
-The backend API will be available at `http://localhost:5002`
+### Frontend Setup
 
-#### 2. Frontend Setup
+1. **Navigate to frontend directory:**
+   ```bash
+   cd frontend
+   ```
 
-```bash
-# Navigate to frontend directory
-cd frontend
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-# Install dependencies
-npm install
+3. **Set up environment variables:**
+   ```bash
+   cp .env.example .env
+   ```
+   Edit `.env` file:
+   ```env
+   REACT_APP_API_URL=http://localhost:5002/api
+   REACT_APP_WS_URL=http://localhost:5002
+   ```
 
-# Set up environment variables
-echo "REACT_APP_API_URL=http://localhost:5002/api" > .env
-echo "REACT_APP_WS_URL=http://localhost:5002" >> .env
+4. **Start the frontend development server:**
+   ```bash
+   npm start
+   ```
 
-# Start development server
-npm start
-```
+   The frontend will be available at `http://localhost:3000`
 
-The frontend application will be available at `http://localhost:3000`
+### Default Login Credentials
 
-#### 3. Default Login Credentials
-
-After setup, log in with:
+After setup, you can login with:
 - **Username**: `admin`
 - **Password**: `admin`
 
 ## 📦 Production Deployment
 
-### Option 1: Traditional VPS/Server
+### Option 1: Traditional VPS/Server Deployment
 
 #### Backend Deployment
 
-```bash
-# Update system and install dependencies
-sudo apt update && sudo apt upgrade -y
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs postgresql postgresql-contrib
+1. **Server preparation:**
+   ```bash
+   # Update system
+   sudo apt update && sudo apt upgrade -y
 
-# Set up PostgreSQL
-sudo -u postgres psql -c "CREATE DATABASE InfraMon;"
-sudo -u postgres psql -c "CREATE USER inframon_user WITH PASSWORD 'secure_password';"
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE InfraMon TO inframon_user;"
+   # Install Node.js
+   curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+   sudo apt-get install -y nodejs
 
-# Deploy application
-git clone https://github.com/your-username/InfraMon.git
-cd InfraMon/backend
+   # Install PostgreSQL
+   sudo apt install postgresql postgresql-contrib -y
 
-# Install production dependencies
-npm install --production
+   # Create database and user
+   sudo -u postgres psql
+   CREATE DATABASE InfraMon;
+   CREATE USER inframon_user WITH PASSWORD 'secure_password';
+   GRANT ALL PRIVILEGES ON DATABASE InfraMon TO inframon_user;
+   \q
 
-# Set production environment variables
-echo "NODE_ENV=production" > .env
-echo "DB_NAME=InfraMon" >> .env
-echo "DB_USER=inframon_user" >> .env
-echo "DB_PASSWORD=secure_password" >> .env
-echo "DB_HOST=localhost" >> .env
-echo "DB_PORT=5432" >> .env
-echo "JWT_SECRET=your-super-secure-jwt-secret" >> .env
+   # OR
+    sudo -u postgres psql -c "CREATE DATABASE InfraMon;"
+    sudo -u postgres psql -c "CREATE USER inframon_user WITH PASSWORD 'secure_password';"
+    sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE InfraMon TO inframon_user;"
+   ```
 
-# Run migrations and start with PM2
-npx sequelize-cli db:migrate
-npm install -g pm2
-pm2 start server.js --name "inframon-backend"
-pm2 startup
-pm2 save
-```
+2. **Deploy backend:**
+   ```bash
+   # Clone repository
+   git clone https://github.com/d3adb0d7/InfraMon.git
+   cd InfraMon/backend
 
-#### Frontend Deployment
+   # Install dependencies
+   npm install --production
 
-```bash
-cd ../frontend
+   # Set production environment variables
+   nano .env
+   ```
+   Production `.env`:
+   ```env
+   NODE_ENV=production
+   DB_NAME=InfraMon
+   DB_USER=inframon_user
+   DB_PASSWORD=secure_password
+   DB_HOST=localhost
+   DB_PORT=5432
+   JWT_SECRET=your-super-secure-jwt-secret
+   # ... other production settings
+   ```
 
-# Build for production
-npm run build
+3. **Database setup:**
+   ```bash
+   npx sequelize-cli db:migrate
+   ```
 
-# Install Nginx
-sudo apt install nginx -y
+4. **Setup process manager:**
+   ```bash
+   # Install PM2
+   npm install -g pm2
 
-# Configure Nginx
-sudo nano /etc/nginx/sites-available/inframon
-```
+   # Start application with PM2
+   pm2 start server.js --name "inframon-backend"
 
-Nginx configuration:
+   # Setup startup script
+   pm2 startup
+   pm2 save
+   ```
 
-```nginx
-server {
-    listen 80;
-    server_name your-domain.com;
+5. **Setup reverse proxy (Nginx):**
+   ```bash
+   sudo apt install nginx -y
+   sudo nano /etc/nginx/sites-available/inframon
+   ```
+   Nginx configuration:
+   ```nginx
+   server {
+    listen 1337;
+    server_name inframon.mynagad.com.bd;
 
     # Backend API
     location /api {
@@ -242,19 +284,28 @@ server {
         index index.html;
     }
 }
-```
+   ```
+   ```bash
+   sudo ln -s /etc/nginx/sites-available/inframon /etc/nginx/sites-enabled/
+   sudo nginx -t
+   sudo systemctl reload nginx
+   ```
 
-Enable the site:
+#### Frontend Deployment
 
-```bash
-sudo ln -s /etc/nginx/sites-available/inframon /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-```
+1. **Build the frontend:**
+   ```bash
+   cd frontend
+   npm run build
+   ```
+
+2. **Deploy build files to Nginx serving directory**
 
 ### Option 2: Docker Deployment
 
-Create `docker-compose.yml` in the project root:
+#### Using Docker Compose
+
+Create `docker-compose.yml` in project root:
 
 ```yaml
 version: '3.8'
@@ -272,9 +323,7 @@ services:
       - "5432:5432"
 
   backend:
-    build: 
-      context: ./backend
-      dockerfile: Dockerfile
+    build: ./backend
     ports:
       - "5002:5002"
     environment:
@@ -287,16 +336,16 @@ services:
       JWT_SECRET: your-super-secure-jwt-secret
     depends_on:
       - postgres
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    build: ./frontend
     ports:
-      - "80:80"
+      - "3000:80"
     environment:
       REACT_APP_API_URL: http://your-domain.com/api
-      REACT_APP_WS_URL: http://your-domain.com
     depends_on:
       - backend
 
@@ -305,14 +354,13 @@ volumes:
 ```
 
 **Backend Dockerfile** (`backend/Dockerfile`):
-
 ```dockerfile
 FROM node:18-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install --production
+RUN npm install
 
 COPY . .
 RUN npx sequelize-cli db:migrate
@@ -323,7 +371,6 @@ CMD ["npm", "start"]
 ```
 
 **Frontend Dockerfile** (`frontend/Dockerfile`):
-
 ```dockerfile
 FROM node:18-alpine as build
 
@@ -362,41 +409,39 @@ server {
 }
 ```
 
-Deploy with Docker Compose:
-
+**Deploy with Docker:**
 ```bash
 docker-compose up -d
 ```
 
-### Option 3: Cloud Platform (Heroku + Netlify)
+### Option 3: Cloud Platform Deployment
 
-#### Backend on Heroku
+#### Deploy to Heroku
 
-```bash
-# Login to Heroku
-heroku login
+1. **Backend on Heroku:**
+   ```bash
+   # Login to Heroku
+   heroku login
 
-# Create app and add PostgreSQL
-heroku create inframon-backend
-heroku addons:create heroku-postgresql:hobby-dev -a inframon-backend
+   # Create app
+   heroku create inframon-backend
 
-# Set environment variables
-heroku config:set JWT_SECRET=your-secret -a inframon-backend
-heroku config:set NODE_ENV=production -a inframon-backend
+   # Add PostgreSQL addon
+   heroku addons:create heroku-postgresql:hobby-dev -a inframon-backend
 
-# Deploy backend
-git subtree push --prefix backend heroku main
-```
+   # Set environment variables
+   heroku config:set JWT_SECRET=your-secret -a inframon-backend
+   heroku config:set NODE_ENV=production -a inframon-backend
 
-#### Frontend on Netlify
+   # Deploy
+   git subtree push --prefix backend heroku main
+   ```
 
-1. Connect your GitHub repository to Netlify
-2. Set build settings:
-   - **Build Command**: `npm run build`
-   - **Publish Directory**: `build`
-3. Set environment variables:
-   - `REACT_APP_API_URL`: `https://inframon-backend.herokuapp.com/api`
-   - `REACT_APP_WS_URL`: `https://inframon-backend.herokuapp.com`
+2. **Frontend on Netlify/Vercel:**
+   - Build command: `npm run build`
+   - Output directory: `build`
+   - Environment variables: - `REACT_APP_API_URL`: `https://inframon-backend.herokuapp.com/api`
+    `REACT_APP_WS_URL`: `https://inframon-backend.herokuapp.com`
 
 ## 🎨 Frontend Features
 
@@ -437,7 +482,7 @@ Configure in user settings:
 - **Uptime Thresholds**: Minimum uptime percentage for alerts
 - **Recovery Notifications**: Get notified when services recover
 
-## 🗄️ Database Schema
+### Database Schema
 
 ### Core Tables
 
@@ -536,7 +581,7 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Built with [Express.js](https://expressjs.com/) and [React](https://reactjs.org/)
+- Built with [Node.js](https://nodejs.org//) and [React](https://reactjs.org/)
 - Database ORM with [Sequelize](https://sequelize.org/)
 - Styling with [Tailwind CSS](https://tailwindcss.com/)
 - Icons from [Lucide React](https://lucide.dev/)
@@ -545,4 +590,4 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 
 **InfraMon** - Monitor your infrastructure with confidence! 🚀
 
-For more information, visit our [GitHub repository](https://github.com/your-username/InfraMon) or join our [community discussions](https://github.com/your-username/InfraMon/discussions).
+For more information, visit our [GitHub repository](https://github.com/d3adb0d7/InfraMon) or join our [community discussions](https://github.com/d3adb0d7/InfraMon/discussions).

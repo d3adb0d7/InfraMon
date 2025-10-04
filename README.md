@@ -284,7 +284,6 @@ After setup, you can login with:
         index index.html;
     }
 }
-   ```
    ```bash
    sudo ln -s /etc/nginx/sites-available/inframon /etc/nginx/sites-enabled/
    sudo nginx -t

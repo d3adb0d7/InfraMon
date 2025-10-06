@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
   const verifyToken = async () => {
     try {
       console.log('Verifying token...');
-      const response = await axios.get('http://localhost:5002/api/auth/verify');
+      const response = await axios.get('http://localhost:3001/api/auth/verify');
       console.log('Token verified, user:', response.data.user);
       setUser(response.data.user);
     } catch (error) {
@@ -49,7 +49,7 @@ export function AuthProvider({ children }) {
   const login = async (username, password) => {
     try {
       console.log('Attempting login with:', username);
-      const response = await axios.post('http://localhost:5002/api/auth/login', {
+      const response = await axios.post('http://localhost:3001/api/auth/login', {
         username,
         password
       });

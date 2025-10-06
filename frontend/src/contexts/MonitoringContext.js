@@ -62,7 +62,7 @@ export const MonitoringProvider = ({ children }) => {
       eventSourceRef.current.close();
     }
 
-    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5002';
+    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
     console.log('📡 Setting up SSE connection to:', `${apiUrl}/api/events`);
 
     try {

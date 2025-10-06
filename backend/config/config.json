@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "InfraMon",
+    "database": "inframon",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "operatorsAliases": false
@@ -10,7 +10,7 @@
   "test": {
     "username": "postgres",
     "password": "postgres",
-    "database": "InfraMon_test",
+    "database": "inframon_test",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "operatorsAliases": false
@@ -18,7 +18,7 @@
   "production": {
     "username": "postgres",
     "password": "postgres",
-    "database": "InfraMon_prod",
+    "database": "inframon_prod",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "operatorsAliases": false
